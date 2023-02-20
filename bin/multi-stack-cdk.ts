@@ -3,8 +3,25 @@ import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { MultiStackCdkStack } from '../lib/multi-stack-cdk-stack';
 
-const app = new cdk.App();
-new MultiStackCdkStack(app, 'MultiStackCdkStack', {
+const app = new cdk.App({
+context:{
+   prod: {
+         account:'12321312',
+	region:'us-east-1'
+   },
+   dev: {
+
+       account:'123231',
+       region:'us-east-2'
+   }   
+}		       
+});
+const stackDev = new MultiStackCdkStack(app, 'MultiStackCdkStackDev', {
+	stackName:'multistack-dev',
+	env:{
+              region: app.node.tryGetContext('dev')['region'],
+              account:app.node.tryGetContext('dev')['account']
+	}
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
@@ -19,3 +36,11 @@ new MultiStackCdkStack(app, 'MultiStackCdkStack', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+const stackProd = new MultiStackCdkStack(app,'MultiStackCdkStackProd',{
+  stackName:'multistack-prod',
+  env:{
+      region:app.node.tryGetContext('prod')['region'],
+      account:app.node.tryGetContext('prod')['account']
+  }
+});
+
