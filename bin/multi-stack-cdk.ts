@@ -36,6 +36,7 @@ const stackDev = new MultiStackCdkStack(app, 'MultiStackCdkStackDev', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+console.log('dev-account',stackDev.account);
 const stackProd = new MultiStackCdkStack(app,'MultiStackCdkStackProd',{
   stackName:'multistack-prod',
   env:{
@@ -43,4 +44,4 @@ const stackProd = new MultiStackCdkStack(app,'MultiStackCdkStackProd',{
       account:app.node.tryGetContext('prod')['account']
   }
 });
-
+console.log('prod-account',stackProd.account);
