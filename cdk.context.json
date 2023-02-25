@@ -1,0 +1,11 @@
+{
+  "dev":{
+	  "account":"12323123123",
+	  "region":"us-east-1"
+  },
+  "prod":{
+
+	 "account":"5553232323",
+	 "region":"us-east-2"
+}
+}
